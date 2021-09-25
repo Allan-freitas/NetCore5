@@ -15,12 +15,12 @@ pipeline {
 				sh "dotnet build ${workspace}/src/Application/Application.sln"
             }
         }
-		stage('Sonarqube') {
-			echo 'Analisando o que você fez...'
+		stage('Sonarqube') {			
 			environment {
 				scannerHome = tool 'SonarQubeScanner'
 			}
 			steps {
+				echo 'Analisando o que você fez...'
 				withSonarQubeEnv('sonarqube') {
 					sh "${scannerHome}/bin/sonar-scanner"
 				}
