@@ -2,7 +2,7 @@
 {
     public class JsonWebTokenDto
     {
-        public string Token { get; set; }
+        public string? Token { get; set; }
 
         public RefreshTokenDto? RefreshToken { get; set; }
 
