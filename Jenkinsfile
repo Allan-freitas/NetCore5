@@ -5,7 +5,8 @@ pipeline {
         stage('Restore packages') {
             steps {
                 echo 'Restoring...'
-				sh "dotnet restore Application.sln"
+				echo "${workspace}"
+				sh "dotnet restore /src/Application/Application.sln"
             }
         }
         stage('Test') {
