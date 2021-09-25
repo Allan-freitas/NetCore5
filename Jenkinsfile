@@ -9,6 +9,12 @@ pipeline {
 				sh "dotnet restore ${workspace}/src/Application/Application.sln"
             }
         }
+		stage('Build') {
+            steps {
+                echo 'Building...'
+				sh "dotnet build ${workspace}/src/Application/Application.sln"
+            }
+        }
         stage('Test') {
             steps {
                 echo 'Testing..'
