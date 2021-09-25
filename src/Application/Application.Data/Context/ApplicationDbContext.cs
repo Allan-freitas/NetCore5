@@ -1,6 +1,7 @@
 ﻿using Application.Domain.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Application.Data.Context
 {

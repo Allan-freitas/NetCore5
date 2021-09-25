@@ -1,4 +1,6 @@
-﻿namespace Application.Domain.Core.Domain
+﻿using System;
+
+namespace Application.Domain.Core.Domain
 {
     public abstract class Entity
     {

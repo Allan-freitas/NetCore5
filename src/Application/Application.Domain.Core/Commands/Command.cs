@@ -1,4 +1,5 @@
 ﻿using Application.Domain.Core.Events;
+using System;
 
 namespace Application.Domain.Core.Commands
 {

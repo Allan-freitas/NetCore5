@@ -3,6 +3,7 @@ using Application.Domain.Core.Domain;
 using Application.Domain.Core.Mediator;
 using Application.Domain.Core.Queries;
 using MediatR;
+using System.Threading.Tasks;
 
 namespace Application.Bus
 {

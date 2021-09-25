@@ -1,4 +1,6 @@
 ﻿using Flunt.Notifications;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Application.Domain.Core.Domain
 {

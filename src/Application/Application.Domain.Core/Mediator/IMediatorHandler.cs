@@ -1,6 +1,7 @@
 ﻿using Application.Domain.Core.Commands;
 using Application.Domain.Core.Domain;
 using Application.Domain.Core.Queries;
+using System.Threading.Tasks;
 
 namespace Application.Domain.Core.Mediator
 {
