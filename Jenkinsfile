@@ -15,14 +15,21 @@ pipeline {
 				sh "dotnet build ${workspace}/src/Application/Application.sln"
             }
         }
-        stage('Test') {
+        stage('SonarQube') {
             steps {
-                echo 'Testing..'
-				sh "dotnet test ${workspace}/src/Application/Application.Tests /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-					dotnet build-server shutdown
-					dotnet sonarscanner begin /k:"net5" /d:sonar.host.url=http://192.168.88.100:9000 /d:sonar.cs.opencover.reportsPaths="${workspace}/src/Application/Application.Tests/coverage.opencover.xml" /d:sonar.coverage.exclusions="**Tests*.cs"
-					dotnet build
-					dotnet sonarscanner end"
+                echo 'SonarQube...'
+				
+				environment {
+					scannerHome = tool 'SonarQubeScanner'
+				}
+				
+				steps {
+					withSonarQubeEnv('sonarqube') {
+					sh "${scannerHome}/bin/sonar-scanner"
+				}
+				timeout(time: 10, unit: 'MINUTES') {
+					waitForQualityGate abortPipeline: true
+				}
             }
         }
         stage('Deploy') {
