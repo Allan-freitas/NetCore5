@@ -16,7 +16,7 @@ pipeline {
             }
         }
 		stage("Tests"){
-            steps{
+            steps {
                 sh "dotnet test ${workspace}/src/Application/Application.sln /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='/var/lib/jenkins/workspace/Net5_main/src/Application/Application.Tests/results/result.json' --no-build"
             }
         }
@@ -38,7 +38,9 @@ pipeline {
 			}
 		}
 		stage(Report) {
-			sh "reportgenerator -reports: '/var/lib/jenkins/workspace/Net5_main/src/Application/Application.Tests/results/result.json' -targetdir:'coveragereport' -reporttypes:Html"
+			steps {
+				sh "reportgenerator -reports: '/var/lib/jenkins/workspace/Net5_main/src/Application/Application.Tests/results/result.json' -targetdir:'coveragereport' -reporttypes:Html"
+			}			
 		}
         stage('Deploy') {
             steps {
