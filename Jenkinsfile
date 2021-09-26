@@ -37,6 +37,9 @@ pipeline {
 				}
 			}
 		}
+		stage(Report) {
+			sh "reportgenerator -reports: '/var/lib/jenkins/workspace/Net5_main/src/Application/Application.Tests/results/result.json' -targetdir:'coveragereport' -reporttypes:Html"
+		}
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
