@@ -17,7 +17,7 @@ pipeline {
         }
 		stage("Tests"){
             steps{
-                sh "dotnet test ${workspace}/src/Application/Application.sln /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='./results/result.json' --no-build"
+                sh "dotnet test ${workspace}/src/Application/Application.sln /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='/var/lib/jenkins/workspace/Net5_main/src/Application/Application.Tests/results/result.json' --no-build"
             }
         }
 		stage('Sonarqube') {			
