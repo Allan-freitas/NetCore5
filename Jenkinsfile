@@ -17,13 +17,8 @@ pipeline {
         }
 		stage("Tests"){
             steps{
-                sh "dotnet test ${workspace}/src/Application/Application.sln /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --no-build"
+                sh "dotnet test ${workspace}/src/Application/Application.sln /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput='./result.json' --no-build"
             }
-        }
-		stage('Dotnet Test') {
-			steps {
-				sh 'python3 bin/build.py --test'
-			}
         }
 		stage('Sonarqube') {			
 			environment {
