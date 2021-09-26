@@ -22,7 +22,7 @@ pipeline {
 			steps {
 				echo 'Analisando o que você fez...'
 				withSonarQubeEnv('sonarqube') {
-					sh 'dotnet restore'
+					sh "dotnet restore ${workspace}/src/Application/Application.sln"
 					sh ("""dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:'Net5'""")
 					sh "dotnet build ${workspace}/src/Application/Application.sln"
 					sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
