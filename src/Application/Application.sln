@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{142D6DDB-D297-4720-9802-E2716E92A454}"
 EndProject
@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Bus", "Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.App", "Application.App\Application.App.csproj", "{50CBD3FE-458B-427D-A6BB-733AEF1F157A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "Application.Tests\Application.Tests.csproj", "{564F5E33-48C1-46A8-9849-D737E3FD6340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Tests", "Application.Tests\Application.Tests.csproj", "{564F5E33-48C1-46A8-9849-D737E3FD6340}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.WebApi", "Application.WebApi\Application.WebApi.csproj", "{B9C85DB9-BE10-47A9-B8E1-78828778D6EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{564F5E33-48C1-46A8-9849-D737E3FD6340}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{564F5E33-48C1-46A8-9849-D737E3FD6340}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{564F5E33-48C1-46A8-9849-D737E3FD6340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9C85DB9-BE10-47A9-B8E1-78828778D6EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9C85DB9-BE10-47A9-B8E1-78828778D6EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9C85DB9-BE10-47A9-B8E1-78828778D6EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9C85DB9-BE10-47A9-B8E1-78828778D6EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{CC03C518-BC34-4742-B282-AA153616272E} = {3BFDD8F3-3346-4958-9814-9E329F4FE650}
 		{50CBD3FE-458B-427D-A6BB-733AEF1F157A} = {142D6DDB-D297-4720-9802-E2716E92A454}
 		{564F5E33-48C1-46A8-9849-D737E3FD6340} = {5CBA116D-7DBA-4086-B8EC-F6DBCD98EEE9}
+		{B9C85DB9-BE10-47A9-B8E1-78828778D6EA} = {16277512-019E-4E9B-A5FC-F153E31A2CD0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {146792BB-8472-4101-8B33-3C8740B8F54C}

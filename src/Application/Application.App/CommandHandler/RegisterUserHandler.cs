@@ -34,7 +34,7 @@ namespace Application.App.CommandHandler
                 return _response;
             }
 
-            var user = await _unitOfWork.UserRepository.Table.Where(u => u.Email == request.Username).FirstOrDefaultAsync();
+            User? user = await _unitOfWork.UserRepository.Table.Where(u => u.Email == request.Username).FirstOrDefaultAsync(cancellationToken);
 
             if (user != null)
             {
