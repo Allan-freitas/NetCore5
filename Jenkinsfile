@@ -22,7 +22,7 @@ pipeline {
 			steps {
 				echo 'Analisando o que você fez...'
 				withSonarQubeEnv('sonarqube') {
-					sh "${scannerHome}/SonarScanner.MSBuild.dll -Dsonar.projectKey=Net5"
+					sh "${scannerHome}/SonarScanner.MSBuild.dll begin /k:'Net5'"
 				}
 				timeout(time: 1, unit: 'MINUTES') {
 					waitForQualityGate abortPipeline: true
