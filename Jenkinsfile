@@ -17,7 +17,7 @@ pipeline {
         }
 		stage("Tests"){
             steps{
-                sh 'dotnet test ${workspace}/src/Application/Application.sln /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --no-build'
+                sh "dotnet test ${workspace}/src/Application/Application.sln /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --no-build"
             }
         }
 		stage('Sonarqube') {			
