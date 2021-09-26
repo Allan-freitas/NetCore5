@@ -20,6 +20,11 @@ pipeline {
                 sh "dotnet test ${workspace}/src/Application/Application.sln /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --no-build"
             }
         }
+		stage('Dotnet Test') {
+			steps {
+				sh 'python3 bin/build.py --test'
+			}
+        }
 		stage('Sonarqube') {			
 			environment {
 				scannerHome = tool 'SonarQubeScanner'
