@@ -15,6 +15,11 @@ pipeline {
 				sh "dotnet build ${workspace}/src/Application/Application.sln"
             }
         }
+		stage("Tests"){
+            steps{
+                sh 'dotnet test ${workspace}/src/Application/Application.sln /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --no-build'
+            }
+        }
 		stage('Sonarqube') {			
 			environment {
 				scannerHome = tool 'SonarQubeScanner'
