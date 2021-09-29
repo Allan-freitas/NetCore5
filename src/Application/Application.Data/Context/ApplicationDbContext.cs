@@ -26,6 +26,6 @@ namespace Application.Data.Context
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-            optionsBuilder.UseNpgsql("Host=omv.serveblog.net;Port=15432;Pooling=true;Database=Jogatina;User Id=devboost;Password=21293811;");
+            optionsBuilder.UseNpgsql("");
     }
 }
