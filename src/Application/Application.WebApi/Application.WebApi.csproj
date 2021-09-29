@@ -9,7 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Application.App\Application.App.csproj" />
+    <ProjectReference Include="..\Application.IoC\Application.IoC.csproj" />
   </ItemGroup>
 
 </Project>
