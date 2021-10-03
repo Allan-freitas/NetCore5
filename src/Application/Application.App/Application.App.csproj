@@ -14,8 +14,4 @@
     <ProjectReference Include="..\Application.Domain.Core\Application.Domain.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="QueryHandler\" />
-  </ItemGroup>
-
 </Project>

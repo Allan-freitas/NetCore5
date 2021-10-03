@@ -1,13 +1,13 @@
-﻿using Application.Domain.Core.Commands;
+﻿using Application.Domain.Core.Bus;
+using Application.Domain.Core.Commands;
 using Application.Domain.Core.Domain;
-using Application.Domain.Core.Mediator;
 using Application.Domain.Core.Queries;
 using MediatR;
 using System.Threading.Tasks;
 
 namespace Application.Bus
 {
-    public class MediatorHandler : IMediatorHandler
+    public class MediatorHandler : IEventBus
     {
         private readonly IMediator _mediator;
 

@@ -12,10 +12,13 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.10" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Application.App\Application.App.csproj" />
+	  <ProjectReference Include="..\Application.Bus\Application.Bus.csproj" />
 	  <ProjectReference Include="..\Application.Data\Application.Data.csproj" />
 	</ItemGroup>
 

@@ -206,7 +206,7 @@ namespace Application.Data.Repositories
         public async Task InsertAsync(T entity)
         {
             await Entities.AddAsync(entity);
-        }
+        }        
 
         #endregion
 
