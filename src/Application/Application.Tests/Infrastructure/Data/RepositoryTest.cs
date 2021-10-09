@@ -31,7 +31,8 @@ namespace Application.Tests.Infrastructure.Data
             _repositoryUser = _repositoryMock.Create<IRepository<User>>();            
         }
 
-        [Fact]        
+        [Fact]     
+        [Trait("Backend", "Repository")]
         public void Insert_Object_In_DataBase()
         {
             const string Nome = "Allan";
@@ -46,6 +47,7 @@ namespace Application.Tests.Infrastructure.Data
         }
 
         [Fact]
+        [Trait("Backend", "Repository")]
         public void Not_Insert_In_DataBase_If_Password_Is_Null()
         {
             const string Nome = "Allan";
@@ -60,6 +62,7 @@ namespace Application.Tests.Infrastructure.Data
         }
 
         [Fact]
+        [Trait("Backend", "Repository")]
         public void Can_We_Insert_User()
         {            
             User user = User.Create("Benjamin", "nimajneb", "benj@live.com");
