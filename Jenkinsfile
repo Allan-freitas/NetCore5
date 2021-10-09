@@ -26,8 +26,7 @@ pipeline {
 			}
 			steps {
 				withSonarQubeEnv('sonarqube') {
-					 sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:'Net5'
-					 /d:sonar.verbose=true'
+					 sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:'Net5 /d:sonar.verbose=true'					 
 					 /d:sonar.cs.opencover.reportsPaths='/var/lib/jenkins/workspace/Net5_main/src/Application/Application.Tests/results/result.xml' /d:sonar.test.exclusions='test/**'"
 				}
 			}
