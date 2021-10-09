@@ -26,7 +26,7 @@ pipeline {
 			}
 			steps {
 				withSonarQubeEnv('sonarqube') {
-					 sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:'Net5 /d:sonar.verbose=true'					 
+					 sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:'Net5'					 
 					 /d:sonar.cs.opencover.reportsPaths='/var/lib/jenkins/workspace/Net5_main/src/Application/Application.Tests/results/result.xml' /d:sonar.test.exclusions='test/**'"
 				}
 			}
@@ -39,7 +39,7 @@ pipeline {
 				echo 'Analisando o que você fez...'
 				withSonarQubeEnv('sonarqube') {
 					sh "dotnet restore ${workspace}/src/Application/Application.sln"
-					sh ("""dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:'Net5'""")
+					sh ("""dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:'Net5' /d:propertyKey='/var/lib/jenkins/workspace/Net5_main/src/Application/Application.Tests/results/'""")
 					sh "dotnet build ${workspace}/src/Application/Application.sln"
 					sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
 				}
