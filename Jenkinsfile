@@ -26,25 +26,11 @@ pipeline {
 			}
 			steps {
 				withSonarQubeEnv('sonarqube') {
+					 sh "dotnet restore ${workspace}/src/Application/Application.sln"
 					 sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:'Net5'					 
 					 /d:sonar.cs.opencover.reportsPaths='/var/lib/jenkins/workspace/Net5_main/src/Application/Application.Tests/results/result.xml' /d:sonar.test.exclusions='test/**'"
-				}
-			}
-		}
-		stage('Sonarqube') {			
-			environment {
-				scannerHome = tool 'SonarQubeScanner'
-			}
-			steps {
-				echo 'Analisando o que você fez...'
-				withSonarQubeEnv('sonarqube') {
-					sh "dotnet restore ${workspace}/src/Application/Application.sln"
-					sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:'Net5'"
-					sh "dotnet build ${workspace}/src/Application/Application.sln"
-					sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
-				}
-				timeout(time: 1, unit: 'MINUTES') {
-					waitForQualityGate abortPipeline: true
+					 sh "dotnet build ${workspace}/src/Application/Application.sln"
+					 sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
 				}
 			}
 		}
