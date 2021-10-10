@@ -4,35 +4,46 @@ namespace Application.Domain.Models.Users
 {
     public class User : Entity
     {
-        private User(long userId, string username, string email, string password)
-        {
-            Id = userId;
-            Username = username;
-            Email = email;
-            Password = password;
-        }
-
-        private User(string username, string email, string password)
-        {            
-            Username = username;
-            Email = email;
-            Password = password;
-        }
-
-        public static User Create(long userId, string username, string email, string password)
-        {
-            return new User(userId, username, email, password);
-        }
-
-        public static User Create(string username, string email, string password)
-        {
-            return new User(username, email, password);
-        }
+        private User() { }
 
         public string Username { get; private set; }
 
         public string Email { get; private set; }
 
         public string Password { get; private set; }
+
+        public class UserBuilder
+        {
+            private readonly User _user = new();
+
+            public UserBuilder AddId(long id)
+            {
+                _user.Id = id;
+                return this;
+            }
+
+            public UserBuilder AddUsername(string username)
+            {
+                _user.Username = username;
+               
+                return this;
+            }
+            public UserBuilder AddEmail(string email)
+            {
+                _user.Email = email;
+                return this;
+            }
+
+            public UserBuilder AddPassword(string password)
+            {
+                _user.Password = password;
+                return this;
+            }
+
+            public User Build()
+            {
+                return _user;
+            }
+        }
     }
 }

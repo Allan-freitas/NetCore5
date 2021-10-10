@@ -190,7 +190,7 @@ namespace Application.Data.Repositories
             try
             {
                 if (entities == null)
-                    throw new ArgumentNullException("entities");
+                    throw new ArgumentNullException(nameof(entities));
 
                 foreach (var entity in entities)
                     Entities.Remove(entity);

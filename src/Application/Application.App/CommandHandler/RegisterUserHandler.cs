@@ -49,8 +49,7 @@ namespace Application.App.CommandHandler
             //hash password
             var passwordHash = _passwordHasher.HashPassword(user, request.Password);
 
-            await _unitOfWork.UserRepository.InsertAsync(User
-                .Create(request.Username, request.Email, passwordHash));
+            await _unitOfWork.UserRepository.InsertAsync(new User.UserBuilder().AddEmail(request.Email).AddPassword(request.Password).AddUsername(request.Username).Build());
 
             await _unitOfWork.CommitAsync();
 

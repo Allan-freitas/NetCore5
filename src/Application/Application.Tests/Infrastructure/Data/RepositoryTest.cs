@@ -4,6 +4,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Application.Tests.Infrastructure.Data
@@ -14,12 +15,12 @@ namespace Application.Tests.Infrastructure.Data
         private readonly Mock<IRepository<User>> _repositoryUser;
         private readonly List<User> UserList = new()
         {
-            User.Create(1, "Noah", "Noah@gmail.com", "21293811"),
-            User.Create(2, "Dila", "Dila@gmail.com", "54215465"),
-            User.Create(3, "Darcy", "Darcy@gmail.com", "54879845"),
-            User.Create(4, "Arivaldo", "Arivaldo@gmail.com", "85455489"),
-            User.Create(5, "Giovanna", "Giovanna@gmail.com", "54897545"),
-            User.Create(6, "Sara", "Sara@gmail.com", "87864551"),
+            new User.UserBuilder().AddId(1).AddEmail("Dila@gmail.com").AddUsername("Dila").AddPassword("5468765").Build(),
+            new User.UserBuilder().AddId(2).AddEmail("Darci@gmail.com").AddUsername("Darci").AddPassword("32545645").Build(),
+            new User.UserBuilder().AddId(3).AddEmail("sara@gmail.com").AddUsername("Sara").AddPassword("56464654").Build(),
+            new User.UserBuilder().AddId(4).AddEmail("Andres@gmail.com").AddUsername("Andres").AddPassword("21293811").Build(),
+            new User.UserBuilder().AddId(5).AddEmail("Allan@gmail.com").AddUsername("Allan").AddPassword("89854654").Build(),
+            new User.UserBuilder().AddId(6).AddEmail("Sebas@gmail.com").AddUsername("Sebastian").AddPassword("45648868").Build(),
         };
 
         public RepositoryTest()
@@ -35,7 +36,7 @@ namespace Application.Tests.Infrastructure.Data
             const string Nome = "Allan";
             const string Senha = "21293811";
             const string Email = "freitasallan@gmail.com";
-            User user = User.Create(11, Nome, Senha, Email);
+            User user = new User.UserBuilder().AddPassword(Senha).AddUsername(Nome).AddId(34).AddEmail(Email).Build();
 
             _repositoryUser.Setup(x => x.Insert(It.Is<User>(args => args == user))).Returns(user).Verifiable();
             var resultadoEsperado = _repositoryUser.Object.Insert(user);
@@ -50,8 +51,8 @@ namespace Application.Tests.Infrastructure.Data
             const string Nome = "Allan";
             const string Senha = null;
             const string Email = "freitasallan@gmail.com";
-            User user = User.Create(10, Nome, Senha, Email);
-            
+            User user = new User.UserBuilder().AddPassword(Senha).AddUsername(Nome).AddId(34).AddEmail(Email).Build();
+
             _repositoryUser.Setup(x => x.Insert(It.Is<User>(args => args == user))).Throws(new Exception("a senha não pode estar vazia")).Verifiable();
             void act() => _repositoryUser.Object.Insert(user);
 
@@ -61,8 +62,8 @@ namespace Application.Tests.Infrastructure.Data
         [Fact]
         [Trait("Backend", "Repository")]
         public void Can_We_Insert_User()
-        {            
-            User user = User.Create(9, "Benjamin", "nimajneb", "benj@live.com");
+        {
+            User user = new User.UserBuilder().AddPassword("876546687").AddUsername("Benjamin").AddId(34).AddEmail("Benjamin@gmail.com").Build();
             _repositoryUser.Setup(f => f.Table).Returns(UserList.AsQueryable());
 
             int numberOfUsers = _repositoryUser.Object.Table.Count();
@@ -81,8 +82,8 @@ namespace Application.Tests.Infrastructure.Data
         {
             List<User> users = new()
             {
-                User.Create(7, "Edgar", "nimajneb", "Edgar@live.com"),
-                User.Create(8, "Andres", "nimajneb", "Andres@live.com")
+                new User.UserBuilder().AddId(156).AddEmail("Sebastian@gmail.com").AddUsername("Sebas").AddPassword("6487").Build(),
+                new User.UserBuilder().AddId(89).AddEmail("Sebas@gmail.com").AddUsername("Sebastian").AddPassword("45648868").Build()
             };
 
             _repositoryUser.Setup(f => f.Table).Returns(UserList.AsQueryable());
@@ -108,6 +109,59 @@ namespace Application.Tests.Infrastructure.Data
             
             Assert.NotNull(user);
             Assert.Equal(user.Username, _repositoryUser.Object.GetById(1).Username);
+        }
+
+        [Fact]
+        [Trait("Backend", "Repository")]
+        public async void Can_We_Insert_Async()
+        {
+            User user = new User.UserBuilder().AddId(10).AddEmail("Sebas@gmail.com").AddUsername("Sebastian").AddPassword("45648868").Build();
+
+            /* Setup mock */
+            _repositoryUser.Setup(f => f.InsertAsync(It.IsAny<User>())).Callback<User>(u => UserList.Add(u)).Returns(Task.FromResult(0));
+            _repositoryUser.Setup(f => f.GetById(It.IsAny<int>())).Returns((int i) => UserList.Where(x => x.Id == i).FirstOrDefault());
+
+            await _repositoryUser.Object.InsertAsync(user);
+            User otherUser = _repositoryUser.Object.GetById(10);
+
+            Assert.NotNull(otherUser);
+        }
+
+        [Fact]
+        [Trait("Backend", "Repository")]
+        public void Can_We_Delete()
+        {
+            /* Setup mock */
+            _repositoryUser.Setup(f => f.GetById(It.IsAny<int>())).Returns((int i) => UserList.Where(x => x.Id == i).FirstOrDefault());
+            _repositoryUser.Setup(s => s.Delete(It.IsAny<User>())).Callback<User>(u => UserList.Remove(u));
+            _repositoryUser.Setup(f => f.Table).Returns(UserList.AsQueryable());
+
+            User user = _repositoryUser.Object.GetById(2);
+            Assert.NotNull(user);
+
+            _repositoryUser.Object.Delete(user);
+            int numberOfUsers = _repositoryUser.Object.Table.Count();
+            Assert.Equal(5, numberOfUsers);
+        }
+
+        [Fact]
+        [Trait("Backend", "Repository")]
+        public void Can_We_Update_Entity()
+        {
+            _repositoryUser.Setup(f => f.GetById(It.IsAny<int>())).Returns((int i) => UserList.Where(x => x.Id == i).FirstOrDefault());
+            _repositoryUser.Setup(p => p.Update(It.IsAny<User>())).Callback((User target) => 
+            {
+                User original = UserList.Where(u => u.Id == target.Id).FirstOrDefault();
+                User updateUser = new User.UserBuilder().AddEmail(target.Email).AddId(target.Id).AddPassword(target.Password).AddUsername(target.Username).Build();
+                UserList.Remove(original);
+                UserList.Add(updateUser);
+            });
+
+            User originalUser = _repositoryUser.Object.GetById(1);
+            User toBeUpdated = new User.UserBuilder().AddEmail("Sakamto@gmail.com").AddId(originalUser.Id).AddPassword(originalUser.Password).AddUsername(originalUser.Username).Build();
+
+            _repositoryUser.Object.Update(toBeUpdated);
+            Assert.Equal("Sakamto@gmail.com", _repositoryUser.Object.GetById(1).Email);
         }
     }
 }
