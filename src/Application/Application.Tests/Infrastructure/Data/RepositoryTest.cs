@@ -163,5 +163,28 @@ namespace Application.Tests.Infrastructure.Data
             _repositoryUser.Object.Update(toBeUpdated);
             Assert.Equal("Sakamto@gmail.com", _repositoryUser.Object.GetById(1).Email);
         }
+
+        [Fact]
+        [Trait("Backend", "Repository")]
+        public void Can_We_Update_Many_Async()
+        {
+            _repositoryUser.Setup(f => f.GetById(It.IsAny<int>())).Returns((int i) => UserList.Where(x => x.Id == i).FirstOrDefault());
+            _repositoryUser.Setup(p => p.UpdateCollectionAsync(It.IsAny<IEnumerable<User>>())).Callback((IEnumerable<User> userLista) => 
+            {
+                foreach (User usr in userLista)
+                {
+                    User original = UserList.Where(u => u.Id == usr.Id).FirstOrDefault();
+                    User updateUser = new User.UserBuilder().AddEmail(usr.Email).AddId(usr.Id).AddPassword("notebook").AddUsername(usr.Username).Build();
+                    UserList.Remove(original);
+                    UserList.Add(updateUser);
+                }
+            }).Returns(Task.FromResult(0)); 
+
+            List<User> lista = new();
+            lista.AddRange(UserList.Where(u => u.Id == 2 || u.Id == 3));
+
+            _repositoryUser.Object.UpdateCollectionAsync(lista);
+            Assert.Equal("notebook", _repositoryUser.Object.GetById(3).Password);
+        }
     }
 }
